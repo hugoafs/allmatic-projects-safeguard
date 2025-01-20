@@ -13,13 +13,14 @@ export const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
+  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
 
   useEffect(() => {
     const projects = JSON.parse(localStorage.getItem("projects") || "[]");
     const foundProject = projects.find((p: Project) => p.id === id);
     if (foundProject) {
-      foundProject.credentials = Array.isArray(foundProject.credentials) 
-        ? foundProject.credentials 
+      foundProject.credentials = Array.isArray(foundProject.credentials)
+        ? foundProject.credentials
         : [];
       setProject(foundProject);
     }
@@ -87,16 +88,18 @@ export const ProjectDetails = () => {
 
   if (!project) return null;
 
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
       <Card className="w-full max-w-6xl mx-auto bg-white shadow-lg">
         <CardHeader className="border-b border-slate-100 bg-slate-50">
           <CardTitle className="text-2xl font-bold text-slate-800 flex justify-between items-center">
             {project.name}
-            <Button
-              onClick={handleAddCredential}
-              className="bg-primary hover:bg-primary/90"
-            >
+            <Button onClick={handleAddCredential} className="bg-primary hover:bg-primary/90">
               <Plus className="h-4 w-4 mr-2" /> Add Access
             </Button>
           </CardTitle>
@@ -109,10 +112,7 @@ export const ProjectDetails = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {project.credentials.map((credential) => (
-                <Card 
-                  key={credential.id} 
-                  className="relative group hover:shadow-lg transition-shadow duration-200"
-                >
+                <Card key={credential.id} className="relative group hover:shadow-lg transition-shadow duration-200">
                   <CardContent className="p-6">
                     <Button
                       variant="destructive"
@@ -178,14 +178,23 @@ export const ProjectDetails = () => {
                       </div>
                       <div className="space-y-2">
                         <Label>Password</Label>
-                        <Input
-                          type="button"
-                          value={credential.password}
-                          onChange={(e) =>
-                            handleCredentialChange(credential.id, "password", e.target.value)
-                          }
-                          placeholder="Enter password"
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            value={credential.password}
+                            onChange={(e) =>
+                              handleCredentialChange(credential.id, "password", e.target.value)
+                            }
+                            placeholder="Enter password"
+                          />
+                          <button
+                            type="button"
+                            onClick={togglePasswordVisibility}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-primary"
+                          >
+                            {showPassword ? "Hide" : "Show"}
+                          </button>
+                        </div>
                       </div>
                       <div className="space-y-2">
                         <Label>API Key</Label>
@@ -205,10 +214,7 @@ export const ProjectDetails = () => {
           )}
 
           <div className="flex gap-4 pt-6">
-            <Button
-              onClick={handleSave}
-              className="flex-1 bg-primary hover:bg-primary/90"
-            >
+            <Button onClick={handleSave} className="flex-1 bg-primary hover:bg-primary/90">
               Save All Credentials
             </Button>
             <Button
