@@ -12,6 +12,12 @@ const Index = () => {
     setProjects(storedProjects);
   }, []);
 
+  const handleDeleteProject = (projectId: string) => {
+    setProjects((prevProjects) => 
+      prevProjects.filter((project) => project.id !== projectId)
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -34,7 +40,11 @@ const Index = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                onDelete={handleDeleteProject}
+              />
             ))}
           </div>
         )}

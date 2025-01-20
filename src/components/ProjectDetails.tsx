@@ -6,6 +6,7 @@ import { Project } from "@/types/project";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { Separator } from "@/components/ui/separator";
 
 export const ProjectDetails = () => {
   const { id } = useParams();
@@ -50,79 +51,80 @@ export const ProjectDetails = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6 p-6">
-        <div className="space-y-2">
-          <Label htmlFor="platform" className="text-sm font-medium text-slate-700">
-            Platform
-          </Label>
-          <Input
-            id="platform"
-            value={credentials.platform}
-            onChange={(e) =>
-              setCredentials({ ...credentials, platform: e.target.value })
-            }
-            className="border-slate-200 focus:border-primary focus:ring-primary"
-            placeholder="Platform name"
-          />
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-slate-700">Platform Information</h3>
+          <div className="space-y-2">
+            <Label htmlFor="platform">Platform Name</Label>
+            <Input
+              id="platform"
+              value={credentials.platform}
+              onChange={(e) =>
+                setCredentials({ ...credentials, platform: e.target.value })
+              }
+              placeholder="Platform name"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="link">Project Link</Label>
+            <Input
+              id="link"
+              value={credentials.link}
+              onChange={(e) =>
+                setCredentials({ ...credentials, link: e.target.value })
+              }
+              placeholder="https://..."
+            />
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="link" className="text-sm font-medium text-slate-700">
-            Project Link
-          </Label>
-          <Input
-            id="link"
-            value={credentials.link}
-            onChange={(e) =>
-              setCredentials({ ...credentials, link: e.target.value })
-            }
-            className="border-slate-200 focus:border-primary focus:ring-primary"
-            placeholder="https://..."
-          />
+
+        <Separator className="my-4" />
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-slate-700">Access Credentials</h3>
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={credentials.email}
+              onChange={(e) =>
+                setCredentials({ ...credentials, email: e.target.value })
+              }
+              placeholder="email@example.com"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={credentials.password}
+              onChange={(e) =>
+                setCredentials({ ...credentials, password: e.target.value })
+              }
+              placeholder="Enter password"
+            />
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            value={credentials.email}
-            onChange={(e) =>
-              setCredentials({ ...credentials, email: e.target.value })
-            }
-            className="border-slate-200 focus:border-primary focus:ring-primary"
-            placeholder="email@example.com"
-          />
+
+        <Separator className="my-4" />
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-slate-700">API Configuration</h3>
+          <div className="space-y-2">
+            <Label htmlFor="apiKey">API Key</Label>
+            <Input
+              id="apiKey"
+              value={credentials.apiKey}
+              onChange={(e) =>
+                setCredentials({ ...credentials, apiKey: e.target.value })
+              }
+              placeholder="Enter API key"
+            />
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="password" className="text-sm font-medium text-slate-700">
-            Password
-          </Label>
-          <Input
-            id="password"
-            type="password"
-            value={credentials.password}
-            onChange={(e) =>
-              setCredentials({ ...credentials, password: e.target.value })
-            }
-            className="border-slate-200 focus:border-primary focus:ring-primary"
-            placeholder="Enter password"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="apiKey" className="text-sm font-medium text-slate-700">
-            API Key
-          </Label>
-          <Input
-            id="apiKey"
-            value={credentials.apiKey}
-            onChange={(e) =>
-              setCredentials({ ...credentials, apiKey: e.target.value })
-            }
-            className="border-slate-200 focus:border-primary focus:ring-primary"
-            placeholder="Enter API key"
-          />
-        </div>
-        <div className="flex gap-4 pt-4">
+
+        <div className="flex gap-4 pt-6">
           <Button
             onClick={handleSave}
             className="flex-1 bg-primary hover:bg-primary/90"
