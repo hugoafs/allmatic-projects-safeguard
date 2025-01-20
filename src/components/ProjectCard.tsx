@@ -23,6 +23,8 @@ export const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
     toast.success("Project deleted successfully");
   };
 
+  const credentialsCount = Array.isArray(project.credentials) ? project.credentials.length : 0;
+
   return (
     <Link to={`/project/${project.id}`}>
       <Card className="hover:shadow-lg transition-shadow duration-300 cursor-pointer bg-white border-slate-200 group relative">
@@ -41,10 +43,10 @@ export const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
         </CardHeader>
         <CardContent>
           <div className="text-sm text-slate-600">
-            {project.credentials.platform ? (
-              <span>Platform: {project.credentials.platform}</span>
+            {credentialsCount === 0 ? (
+              <span>No stored credentials</span>
             ) : (
-              <span>{Object.keys(project.credentials).length} stored credentials</span>
+              <span>{credentialsCount} stored {credentialsCount === 1 ? 'access' : 'accesses'}</span>
             )}
           </div>
         </CardContent>
