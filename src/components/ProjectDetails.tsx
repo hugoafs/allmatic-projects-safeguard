@@ -179,7 +179,7 @@ export const ProjectDetails = () => {
                       <div className="space-y-2">
                         <Label>Password</Label>
                         <Input
-                          type="password"
+                          type="button"
                           value={credential.password}
                           onChange={(e) =>
                             handleCredentialChange(credential.id, "password", e.target.value)
