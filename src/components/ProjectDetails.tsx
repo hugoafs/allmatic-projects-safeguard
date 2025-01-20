@@ -12,6 +12,7 @@ export const ProjectDetails = () => {
   const navigate = useNavigate();
   const [project, setProject] = useState<Project | null>(null);
   const [credentials, setCredentials] = useState({
+    platform: "",
     link: "",
     email: "",
     password: "",
@@ -42,24 +43,45 @@ export const ProjectDetails = () => {
   if (!project) return null;
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">{project.name}</CardTitle>
+    <Card className="w-full max-w-2xl mx-auto bg-white shadow-lg">
+      <CardHeader className="border-b border-slate-100 bg-slate-50">
+        <CardTitle className="text-2xl font-bold text-slate-800">
+          {project.name}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 p-6">
         <div className="space-y-2">
-          <Label htmlFor="link">Project Link</Label>
+          <Label htmlFor="platform" className="text-sm font-medium text-slate-700">
+            Platform
+          </Label>
+          <Input
+            id="platform"
+            value={credentials.platform}
+            onChange={(e) =>
+              setCredentials({ ...credentials, platform: e.target.value })
+            }
+            className="border-slate-200 focus:border-primary focus:ring-primary"
+            placeholder="Platform name"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="link" className="text-sm font-medium text-slate-700">
+            Project Link
+          </Label>
           <Input
             id="link"
             value={credentials.link}
             onChange={(e) =>
               setCredentials({ ...credentials, link: e.target.value })
             }
+            className="border-slate-200 focus:border-primary focus:ring-primary"
             placeholder="https://..."
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+            Email
+          </Label>
           <Input
             id="email"
             type="email"
@@ -67,11 +89,14 @@ export const ProjectDetails = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, email: e.target.value })
             }
+            className="border-slate-200 focus:border-primary focus:ring-primary"
             placeholder="email@example.com"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+            Password
+          </Label>
           <Input
             id="password"
             type="password"
@@ -79,28 +104,35 @@ export const ProjectDetails = () => {
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
+            className="border-slate-200 focus:border-primary focus:ring-primary"
             placeholder="Enter password"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="apiKey">API Key</Label>
+          <Label htmlFor="apiKey" className="text-sm font-medium text-slate-700">
+            API Key
+          </Label>
           <Input
             id="apiKey"
             value={credentials.apiKey}
             onChange={(e) =>
               setCredentials({ ...credentials, apiKey: e.target.value })
             }
+            className="border-slate-200 focus:border-primary focus:ring-primary"
             placeholder="Enter API key"
           />
         </div>
-        <div className="flex gap-4">
-          <Button onClick={handleSave} className="flex-1">
+        <div className="flex gap-4 pt-4">
+          <Button
+            onClick={handleSave}
+            className="flex-1 bg-primary hover:bg-primary/90"
+          >
             Save Credentials
           </Button>
           <Button
             variant="outline"
             onClick={() => navigate("/")}
-            className="flex-1"
+            className="flex-1 border-slate-200 text-slate-700 hover:bg-slate-50"
           >
             Back to Projects
           </Button>
